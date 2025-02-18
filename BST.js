@@ -26,7 +26,7 @@ class Tree {
   // returns root node of tree
   #buildTreeRecur(arr, start, end) {
     if (start > end) {
-      return null;
+      return new Node(null);
     }
     const mid = start + Math.floor((end - start) / 2);
 
@@ -51,7 +51,27 @@ class Tree {
     return this.root; // TODO: need to return something?
   }
 
-  insert(value) {}
+  insert(value) {
+    const newNode = new Node(value);
+
+    let currNode = this.root;
+
+    while (currNode.data != null) {
+      console.log("current data not null");
+      if (newNode.data < currNode.data) {
+        currNode = currNode.left;
+        console.log("left: ", currNode.data);
+      } else {
+        currNode = currNode.right;
+        console.log("right: ", currNode.data);
+      }
+    }
+
+    currNode.data = newNode.data;
+    currNode.left = new Node(null);
+    currNode.right = new Node(null);
+    return currNode;
+  }
 
   deleteItem(value) {}
 
@@ -90,3 +110,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
+
+let tr1 = new Tree([1, 2, 3, 4, 8, 9, 10, 11, 12, 13]);
