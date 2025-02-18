@@ -12,7 +12,7 @@ class Tree {
   root = null;
 
   constructor(arrIn) {
-    this.arr = arrIn;
+    this.buildTree(arrIn);
   }
 
   // returns an array of unique sorted Integers
@@ -31,7 +31,7 @@ class Tree {
     const mid = start + Math.floor((end - start) / 2);
 
     // make a new root out of the middle element of array
-    newRoot = new Node(arr[mid]);
+    const newRoot = new Node(arr[mid]);
 
     // build left and right subtree recursively
     newRoot.left = this.#buildTreeRecur(arr, start, mid - 1);
@@ -43,7 +43,11 @@ class Tree {
   // with result
   buildTree(arr) {
     let sortedUniqueArr = this.#sortedSet(arr);
-    this.root = this.#buildTreeRecur(sortedUniqueArr, 0, sortedArr.length);
+    this.root = this.#buildTreeRecur(
+      sortedUniqueArr,
+      0,
+      sortedUniqueArr.length
+    );
     return this.root; // TODO: need to return something?
   }
 
