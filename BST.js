@@ -86,9 +86,36 @@ class Tree {
     }
     return curr;
   }
+
   deleteItem(value) {
-    // deleting a node
-    // replace node value with the
+    // if deleing a leaf, just delete, no problems
+    let currNode = this.root;
+    let parentNode = this.root;
+    while (currNode !== null) {
+      if (currNode.data === value) {
+        if (currNode.left === null && currNode.right === null) {
+          console.log("current Node: ", currNode.data);
+          if (currNode === parentNode.left) {
+            parentNode.left = null;
+          } else if (currNode === parentNode.right) {
+            parentNode.right = null;
+          }
+          return true;
+        }
+      }
+      if (value < currNode.data) {
+        parentNode = currNode;
+        currNode = currNode.left;
+        console.log("traversing left: ", currNode.data);
+      }
+
+      if (value > currNode.data) {
+        parentNode = currNode;
+        currNode = currNode.right;
+        console.log("traversing right: ", currNode.data);
+      }
+    }
+    return false;
   }
 
   find(value) {}
