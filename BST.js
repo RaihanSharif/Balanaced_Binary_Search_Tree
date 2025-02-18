@@ -46,7 +46,7 @@ class Tree {
     this.root = this.#buildTreeRecur(
       sortedUniqueArr,
       0,
-      sortedUniqueArr.length
+      sortedUniqueArr.length - 1
     );
     return this.root; // TODO: need to return something?
   }
