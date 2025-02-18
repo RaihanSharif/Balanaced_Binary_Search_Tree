@@ -26,7 +26,7 @@ class Tree {
   // returns root node of tree
   #buildTreeRecur(arr, start, end) {
     if (start > end) {
-      return new Node(null);
+      return null;
     }
     const mid = start + Math.floor((end - start) / 2);
 
@@ -56,24 +56,40 @@ class Tree {
 
     let currNode = this.root;
 
-    while (currNode.data != null) {
+    while (true) {
       console.log("current data not null");
+      if (value === currNode.data) {
+        break;
+      }
       if (newNode.data < currNode.data) {
-        currNode = currNode.left;
-        console.log("left: ", currNode.data);
-      } else {
-        currNode = currNode.right;
-        console.log("right: ", currNode.data);
+        if (currNode.left !== null) {
+          currNode = currNode.left;
+        } else {
+          currNode.left = newNode;
+          return currNode.left;
+        }
+      } else if (newNode.data > currNode.data) {
+        if (currNode.right !== null) {
+          currNode = currNode.right;
+        } else {
+          currNode.right = newNode;
+          return currNode.right;
+        }
       }
     }
-
-    currNode.data = newNode.data;
-    currNode.left = new Node(null);
-    currNode.right = new Node(null);
-    return currNode;
   }
 
-  deleteItem(value) {}
+  #getSuccessor(curr) {
+    curr = curr.right;
+    while (curr !== null && curr.left !== null) {
+      curr = curr.left;
+    }
+    return curr;
+  }
+  deleteItem(value) {
+    // deleting a node
+    // replace node value with the
+  }
 
   find(value) {}
 
@@ -111,4 +127,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let tr1 = new Tree([1, 2, 3, 4, 8, 9, 10, 11, 12, 13]);
+let tr1 = new Tree([1, 3, 5, 8, 9, 10, 12, 13, 15]);
+let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
