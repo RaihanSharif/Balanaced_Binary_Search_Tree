@@ -15,23 +15,36 @@ class Tree {
     this.arr = arrIn;
   }
 
-  buildTree(arr) {
-    if (root === null) {
-      // create a new root
-    }
-  }
-
-  #buildTreeHelper(arr, start, end) {
-    if (start > end) {
-      return null;
-    }
-  }
-
   // returns an array of unique sorted Integers
   #sortedSet(arr) {
     let unique = [...new Set(arr)];
     unique.sort((a, b) => parseInt(a) - parseInt(b));
     return unique;
+  }
+
+  // takes a sorted, unique array, builds a balanced binary tree
+  // returns root node of tree
+  #buildTreeRecur(arr, start, end) {
+    if (start > end) {
+      return null;
+    }
+    const mid = start + Math.floor((end - start) / 2);
+
+    // make a new root out of the middle element of array
+    newRoot = new Node(arr[mid]);
+
+    // build left and right subtree recursively
+    newRoot.left = this.#buildTreeRecur(arr, start, mid - 1);
+    newRoot.right = this.#buildTreeRecur(arr, mid + 1, end);
+    return newRoot;
+  }
+
+  // builds an entirely new tree and replaces root attribute value
+  // with result
+  buildTree(arr) {
+    let sortedUniqueArr = this.#sortedSet(arr);
+    this.root = this.#buildTreeRecur(sortedUniqueArr, 0, sortedArr.length);
+    return this.root; // TODO: need to return something?
   }
 
   insert(value) {}
