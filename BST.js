@@ -1,8 +1,9 @@
 class Node {
-  constructor(data) {
+  constructor(data, par = null) {
     this.data = data;
     this.left = null;
     this.right = null;
+    this.parent = par;
   }
 }
 
@@ -24,18 +25,18 @@ class Tree {
 
   // takes a sorted, unique array, builds a balanced binary tree
   // returns root node of tree
-  #buildTreeRecur(arr, start, end) {
+  #buildTreeRecur(arr, start, end, par) {
     if (start > end) {
       return null;
     }
     const mid = start + Math.floor((end - start) / 2);
 
     // make a new root out of the middle element of array
-    const newRoot = new Node(arr[mid]);
+    const newRoot = new Node(arr[mid], par);
 
     // build left and right subtree recursively
-    newRoot.left = this.#buildTreeRecur(arr, start, mid - 1);
-    newRoot.right = this.#buildTreeRecur(arr, mid + 1, end);
+    newRoot.left = this.#buildTreeRecur(arr, start, mid - 1, newRoot);
+    newRoot.right = this.#buildTreeRecur(arr, mid + 1, end, newRoot);
     return newRoot;
   }
 
@@ -46,7 +47,8 @@ class Tree {
     this.root = this.#buildTreeRecur(
       sortedUniqueArr,
       0,
-      sortedUniqueArr.length - 1
+      sortedUniqueArr.length - 1,
+      null
     );
     return this.root; // TODO: need to return something?
   }
@@ -87,32 +89,19 @@ class Tree {
     return curr;
   }
 
+  #isLeaf(node) {
+    return node.left === null && left.right === null;
+  }
+
   deleteItem(value) {
-    // if deleing a leaf, just delete, no problems
-    let currNode = this.root;
-    let parentNode = this.root;
-    while (currNode !== null) {
-      if (currNode.data === value) {
-        if (currNode.left === null && currNode.right === null) {
-          if (currNode === parentNode.left) {
-            parentNode.left = null;
-            return true;
-          }
-          if (currNode === parentNode.right) {
-            parentNode.right = null;
-            return true;
-          }
-        }
-      }
-      if (value < currNode.data) {
-        parentNode = currNode;
-        currNode = currNode.left;
-      } else if (value > currNode.data) {
-        parentNode = currNode;
-        currNode = currNode.right;
-      }
+    const item = this.find(value);
+
+    if (item === null) {
+      return null;
     }
-    return false;
+
+    if (this.#isLeaf(item)) {
+    }
   }
 
   #recursiveSearch(node, value) {
