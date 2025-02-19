@@ -216,7 +216,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let tr1 = new Tree([1, 3, 5, 8, 9, 10, 12, 13, 15]);
+let tr1 = new Tree([2, 3, 4, 5, 8, 9, 10, 12, 13, 15, 17, 20, 25]);
 let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
 
 // prettyPrint(tr1.root);
@@ -265,11 +265,14 @@ let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
 // );
 prettyPrint(tr1.root);
 
-tr1.deleteItem(3);
-prettyPrint(tr1.root);
-console.log("_______________________________________");
-tr1.deleteItem(10);
-prettyPrint(tr1.root);
-console.log("_______________________________________");
-tr1.deleteItem(12);
+// tr1.deleteItem(3);
+// prettyPrint(tr1.root);
+// console.log("_______________________________________");
+// tr1.deleteItem(10);
+// prettyPrint(tr1.root);
+// console.log("_______________________________________");
+// tr1.deleteItem(12);
+// prettyPrint(tr1.root);
+
+tr1.deleteItem(4);
 prettyPrint(tr1.root);
