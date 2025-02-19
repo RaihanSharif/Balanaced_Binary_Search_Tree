@@ -90,13 +90,45 @@ class Tree {
   }
 
   isLeaf(n) {
-    console.log(`n is: `, n);
     if (n === null) return null;
     if (n.left === null && n.right === null) {
       return true;
     } else {
       return false;
     }
+  }
+
+  #isSingleChildNode(n) {
+    if (n === null) return null;
+
+    if (
+      (n.left === null && n.right !== null) ||
+      (n.left !== null && n.right === null)
+    ) {
+      return true;
+    }
+    return false;
+  }
+  // takes a node with a single child only, and deletes it from the tree
+  #delOneChildNode(node) {
+    let par = node.parent;
+    let child = null;
+
+    if (node.left === null) {
+      child = node.right;
+    } else {
+      child = node.left;
+    }
+
+    child.parent = node.parent;
+
+    // check if the node to delete is a left or child
+    if (node.parent.left == node) {
+      node.parent.left = child;
+    } else {
+      node.parent.right = child;
+    }
+    return node.data;
   }
 
   deleteItem(value) {
@@ -115,6 +147,12 @@ class Tree {
       if (item === par.right) {
         par.right = null;
         return item.data;
+      }
+    } else {
+      const single = this.#isSingleChildNode(item);
+
+      if (single) {
+        this.#delOneChildNode(item);
       }
     }
   }
@@ -179,4 +217,25 @@ prettyPrint(tr1.root);
 tr1.deleteItem(1);
 prettyPrint(tr1.root);
 tr1.deleteItem(15);
+prettyPrint(tr1.root);
+tr1.deleteItem(5);
+console.log(
+  "-----------------------------------------------------------------"
+);
+tr1.deleteItem(13);
+console.log(
+  "-----------------------------------------------------------------"
+);
+prettyPrint(tr1.root);
+
+tr1.deleteItem(13);
+console.log(
+  "-----------------------------------------------------------------"
+);
+prettyPrint(tr1.root);
+
+tr1.deleteItem(12);
+console.log(
+  "-----------------------------------------------------------------"
+);
 prettyPrint(tr1.root);
