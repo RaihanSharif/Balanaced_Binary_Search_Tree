@@ -7,8 +7,6 @@ class Node {
   }
 }
 
-// TODO: remove duplicate values or check for duplicates before inserting
-// new element
 class Tree {
   root = null;
 
@@ -81,14 +79,6 @@ class Tree {
     }
   }
 
-  #getSuccessor(curr) {
-    curr = curr.right;
-    while (curr !== null && curr.left !== null) {
-      curr = curr.left;
-    }
-    return curr;
-  }
-
   isLeaf(n) {
     if (n === null) return null;
     if (n.left === null && n.right === null) {
@@ -131,6 +121,24 @@ class Tree {
     return node.data;
   }
 
+  // check in the main delete method that this is a double node
+
+  #isDoubleNode(node) {
+    return (node.left !== null) & (node.right !== null);
+  }
+  getLeftMost(node) {
+    if (node.left === null) return node;
+    if (node.left !== null) return this.getLeftMost(node.left);
+  }
+
+  #delDoubleNode(node) {
+    const repalcement = this.getLeftMost(node.right);
+    console.log(`this node replaces the target to be delete: `, repalcement);
+    let tempData = repalcement.data;
+    this.deleteItem(repalcement.data);
+    node.data = tempData;
+  }
+
   deleteItem(value) {
     const item = this.find(value);
 
@@ -150,6 +158,8 @@ class Tree {
       }
     } else if (this.#isSingleChildNode(item)) {
       this.#delOneChildNode(item);
+    } else if (this.#isDoubleNode(item)) {
+      this.#delDoubleNode(item);
     }
   }
 
@@ -209,34 +219,57 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let tr1 = new Tree([1, 3, 5, 8, 9, 10, 12, 13, 15]);
 let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
 
-prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
-tr1.deleteItem(1);
-prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
-tr1.deleteItem(15);
-prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
-tr1.deleteItem(5);
-prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// tr1.deleteItem(1);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// tr1.deleteItem(15);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// tr1.deleteItem(5);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
 
-tr1.deleteItem(13);
-prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
+// tr1.deleteItem(13);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
 
+// tr1.deleteItem(12);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+
+// // doesn't insert duplicates
+// tr1.insert(3);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+
+// tr1.insert(5);
+// prettyPrint(tr1.root);
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+prettyPrint(tr1.root);
+
+tr1.deleteItem(3);
+prettyPrint(tr1.root);
+console.log("_______________________________________");
+tr1.deleteItem(10);
+prettyPrint(tr1.root);
+console.log("_______________________________________");
 tr1.deleteItem(12);
 prettyPrint(tr1.root);
-console.log(
-  "-----------------------------------------------------------------"
-);
