@@ -94,31 +94,45 @@ class Tree {
     while (currNode !== null) {
       if (currNode.data === value) {
         if (currNode.left === null && currNode.right === null) {
-          console.log("current Node: ", currNode.data);
           if (currNode === parentNode.left) {
             parentNode.left = null;
-          } else if (currNode === parentNode.right) {
-            parentNode.right = null;
+            return true;
           }
-          return true;
+          if (currNode === parentNode.right) {
+            parentNode.right = null;
+            return true;
+          }
         }
       }
       if (value < currNode.data) {
         parentNode = currNode;
         currNode = currNode.left;
-        console.log("traversing left: ", currNode.data);
-      }
-
-      if (value > currNode.data) {
+      } else if (value > currNode.data) {
         parentNode = currNode;
         currNode = currNode.right;
-        console.log("traversing right: ", currNode.data);
       }
     }
     return false;
   }
 
-  find(value) {}
+  #recursiveSearch(node, value) {
+    if (node === null) {
+      return null;
+    }
+    if (value < node.data) {
+      return this.#recursiveSearch(node.left, value);
+    }
+    if (value > node.data) {
+      return this.#recursiveSearch(node.right, value);
+    }
+    if (node.data === value) {
+      return node;
+    }
+  }
+
+  find(value) {
+    return this.#recursiveSearch(this.root, value);
+  }
 
   // TODO: Error if no callback function is supplied
   levelOrder(callback) {}
