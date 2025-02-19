@@ -89,8 +89,14 @@ class Tree {
     return curr;
   }
 
-  #isLeaf(node) {
-    return node.left === null && left.right === null;
+  isLeaf(n) {
+    console.log(`n is: `, n);
+    if (n === null) return null;
+    if (n.left === null && n.right === null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   deleteItem(value) {
@@ -100,7 +106,16 @@ class Tree {
       return null;
     }
 
-    if (this.#isLeaf(item)) {
+    if (this.isLeaf(item)) {
+      const par = item.parent;
+      if (item === par.left) {
+        par.left = null;
+        return item.data;
+      }
+      if (item === par.right) {
+        par.right = null;
+        return item.data;
+      }
     }
   }
 
@@ -159,3 +174,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let tr1 = new Tree([1, 3, 5, 8, 9, 10, 12, 13, 15]);
 let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
+
+prettyPrint(tr1.root);
+tr1.deleteItem(1);
+prettyPrint(tr1.root);
+tr1.deleteItem(15);
+prettyPrint(tr1.root);
