@@ -148,12 +148,8 @@ class Tree {
         par.right = null;
         return item.data;
       }
-    } else {
-      const single = this.#isSingleChildNode(item);
-
-      if (single) {
-        this.#delOneChildNode(item);
-      }
+    } else if (this.#isSingleChildNode(item)) {
+      this.#delOneChildNode(item);
     }
   }
 
@@ -214,28 +210,33 @@ let tr1 = new Tree([1, 3, 5, 8, 9, 10, 12, 13, 15]);
 let tr2 = new Tree([1, 2, 3, 4, 5, 6, 9, 10, 11, 12]);
 
 prettyPrint(tr1.root);
+console.log(
+  "-----------------------------------------------------------------"
+);
 tr1.deleteItem(1);
 prettyPrint(tr1.root);
+console.log(
+  "-----------------------------------------------------------------"
+);
 tr1.deleteItem(15);
 prettyPrint(tr1.root);
+console.log(
+  "-----------------------------------------------------------------"
+);
 tr1.deleteItem(5);
-console.log(
-  "-----------------------------------------------------------------"
-);
-tr1.deleteItem(13);
-console.log(
-  "-----------------------------------------------------------------"
-);
 prettyPrint(tr1.root);
+console.log(
+  "-----------------------------------------------------------------"
+);
 
 tr1.deleteItem(13);
+prettyPrint(tr1.root);
 console.log(
   "-----------------------------------------------------------------"
 );
-prettyPrint(tr1.root);
 
 tr1.deleteItem(12);
+prettyPrint(tr1.root);
 console.log(
   "-----------------------------------------------------------------"
 );
-prettyPrint(tr1.root);
