@@ -183,7 +183,24 @@ class Tree {
   }
 
   // TODO: Error if no callback function is supplied
-  levelOrder(callback) {}
+  levelOrder(callback, root = this.root) {
+    if (root === null) return null;
+    if (callback === null) throw new Error("callback no provided");
+
+    const queue = []; // stores the values of the traversal
+    queue.push(root);
+    while (queue.length !== 0) {
+      let current = queue[0];
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+      callback(current.data);
+      queue.splice(0, 1);
+    }
+  }
 
   // TODO: Error if no callback function is supplied
   inOrder(callback) {}
@@ -276,3 +293,4 @@ prettyPrint(tr1.root);
 
 tr1.deleteItem(4);
 prettyPrint(tr1.root);
+tr1.levelOrder(console.log);
