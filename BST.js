@@ -228,6 +228,7 @@ class Tree {
     callback(root.data);
   }
 
+  // height of subree where node with (value) is the root
   height(value, root = this.find(value)) {
     if (root === null) return -1;
     let leftHeight = this.height(value, root.left);
@@ -235,7 +236,17 @@ class Tree {
     return Math.max(leftHeight, rightHeight) + 1;
   }
 
-  depth(node) {}
+  // number of edges from supplied node to the root of the tree
+  depth(value) {
+    let count = 0;
+    let current = this.find(value);
+    if (current === null) throw new Error("could not find value in tree");
+    while (current !== this.root) {
+      count++;
+      current = current.parent;
+    }
+    return count;
+  }
 
   isBalanced() {}
 
@@ -315,18 +326,25 @@ prettyPrint(tr1.root);
 
 tr1.deleteItem(4);
 prettyPrint(tr1.root);
-console.log(`level order`);
-tr1.levelOrder(console.log);
-console.log(`inOrder`);
-tr1.inOrder(console.log);
-console.log(`preOrder`);
-tr1.preOrder(console.log);
-console.log(`postOrder`);
-tr1.postOrder(console.log);
 
-console.log(`height 12: `, tr1.height(12));
-console.log(`height 13: `, tr1.height(13));
-console.log(`height 5: `, tr1.height(5));
-console.log(`height 5: `, tr1.height(5));
-const data = tr1.root.data;
-console.log(`height 10: `, tr1.height(data)); // why can't I just pass in tr1.root.data?
+// testing traversal algorithms
+// console.log(`level order`);
+// tr1.levelOrder(console.log);
+// console.log(`inOrder`);
+// tr1.inOrder(console.log);
+// console.log(`preOrder`);
+// tr1.preOrder(console.log);
+// console.log(`postOrder`);
+// tr1.postOrder(console.log);
+
+// testing height
+// console.log(`height 12: `, tr1.height(12));
+// console.log(`height 13: `, tr1.height(13));
+// console.log(`height 5: `, tr1.height(5));
+// console.log(`height 5: `, tr1.height(5));
+// const data = tr1.root.data;
+// console.log(`height 10: `, tr1.height(data)); // why can't I just pass in tr1.root.data?
+
+console.log(`depth of node 2: `, tr1.depth(2));
+console.log(`depth of node 13: `, tr1.depth(13));
+console.log(`depth of node 5: `, tr1.depth(5));
