@@ -182,7 +182,6 @@ class Tree {
     return this.#recursiveSearch(this.root, value);
   }
 
-  // TODO: Error if no callback function is supplied
   levelOrder(callback, root = this.root) {
     if (root === null) return null;
     if (callback === null) throw new Error("callback no provided");
@@ -202,11 +201,25 @@ class Tree {
     }
   }
 
-  // TODO: Error if no callback function is supplied
-  inOrder(callback) {}
+  // in order traversal gives you a sorted list
+  inOrder(callback, root = this.root) {
+    if (root === null) return null;
+    if (callback === null) throw new Error("callback no provided");
+
+    this.inOrder(callback, root.left);
+    callback(root.data);
+    this.inOrder(callback, root.right);
+  }
 
   // TODO: Error if no callback function is supplied
-  preOrder(callback) {}
+  preOrder(callback, root = this.root) {
+    if (root === null) return null;
+    if (callback === null) return new Error("callback no provided");
+
+    callback(root.data);
+    this.preOrder(callback, root.left);
+    this.preOrder(callback, root.right);
+  }
 
   // TODO: Error if no callback function is supplied
   postOrder(callback) {}
@@ -293,4 +306,9 @@ prettyPrint(tr1.root);
 
 tr1.deleteItem(4);
 prettyPrint(tr1.root);
+console.log(`level order`);
 tr1.levelOrder(console.log);
+console.log(`inOrder`);
+tr1.inOrder(console.log);
+console.log(`preOrder`);
+tr1.preOrder(console.log);
