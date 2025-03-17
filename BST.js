@@ -211,7 +211,6 @@ class Tree {
     this.inOrder(callback, root.right);
   }
 
-  // TODO: Error if no callback function is supplied
   preOrder(callback, root = this.root) {
     if (root === null) return null;
     if (callback === null) return new Error("callback not provided");
@@ -221,7 +220,6 @@ class Tree {
     this.preOrder(callback, root.right);
   }
 
-  // TODO: Error if no callback function is supplied
   postOrder(callback, root = this.root) {
     if (root === null) return null;
     if (callback === null) return new Error("callback not provided");
@@ -230,7 +228,12 @@ class Tree {
     callback(root.data);
   }
 
-  height(node) {}
+  height(value, root = this.find(value)) {
+    if (root === null) return -1;
+    let leftHeight = this.height(value, root.left);
+    let rightHeight = this.height(value, root.right);
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
 
   depth(node) {}
 
@@ -320,3 +323,10 @@ console.log(`preOrder`);
 tr1.preOrder(console.log);
 console.log(`postOrder`);
 tr1.postOrder(console.log);
+
+console.log(`height 12: `, tr1.height(12));
+console.log(`height 13: `, tr1.height(13));
+console.log(`height 5: `, tr1.height(5));
+console.log(`height 5: `, tr1.height(5));
+const data = tr1.root.data;
+console.log(`height 10: `, tr1.height(data)); // why can't I just pass in tr1.root.data?
