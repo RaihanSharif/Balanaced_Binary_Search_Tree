@@ -184,7 +184,7 @@ class Tree {
 
   levelOrder(callback, root = this.root) {
     if (root === null) return null;
-    if (callback === null) throw new Error("callback no provided");
+    if (callback === null) throw new Error("callback not provided");
 
     const queue = []; // stores the values of the traversal
     queue.push(root);
@@ -214,7 +214,7 @@ class Tree {
   // TODO: Error if no callback function is supplied
   preOrder(callback, root = this.root) {
     if (root === null) return null;
-    if (callback === null) return new Error("callback no provided");
+    if (callback === null) return new Error("callback not provided");
 
     callback(root.data);
     this.preOrder(callback, root.left);
@@ -222,7 +222,13 @@ class Tree {
   }
 
   // TODO: Error if no callback function is supplied
-  postOrder(callback) {}
+  postOrder(callback, root = this.root) {
+    if (root === null) return null;
+    if (callback === null) return new Error("callback not provided");
+    this.postOrder(callback, root.left);
+    this.postOrder(callback, root.right);
+    callback(root.data);
+  }
 
   height(node) {}
 
@@ -312,3 +318,5 @@ console.log(`inOrder`);
 tr1.inOrder(console.log);
 console.log(`preOrder`);
 tr1.preOrder(console.log);
+console.log(`postOrder`);
+tr1.postOrder(console.log);
