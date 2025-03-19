@@ -248,7 +248,22 @@ class Tree {
     return count;
   }
 
-  isBalanced() {}
+  #getHeight(node) {
+    if (!node) return 0;
+
+    let leftHeight = this.#getHeight(node.left);
+    if (leftHeight === -1) return -1; // subtree is unbalanced, see third code block below
+
+    let rightHeight = this.#getHeight(node.right);
+    if (rightHeight === -1) return -1;
+
+    if (Math.abs(leftHeight - rightHeight) > 1) return -1;
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+  isBalanced(root = this.root) {
+    return this.#getHeight(root) !== -1;
+  }
 
   rebalance() {}
 }
@@ -345,6 +360,14 @@ prettyPrint(tr1.root);
 // const data = tr1.root.data;
 // console.log(`height 10: `, tr1.height(data)); // why can't I just pass in tr1.root.data?
 
-console.log(`depth of node 2: `, tr1.depth(2));
-console.log(`depth of node 13: `, tr1.depth(13));
-console.log(`depth of node 5: `, tr1.depth(5));
+// testing depth
+// console.log(`depth of node 2: `, tr1.depth(2));
+// console.log(`depth of node 13: `, tr1.depth(13));
+// console.log(`depth of node 5: `, tr1.depth(5));
+
+console.log(`is balanced: `, tr1.isBalanced()); // true
+tr1.insert(22);
+tr1.insert(33);
+tr1.insert(44);
+prettyPrint(tr1.root);
+console.log(`is balanced: `, tr1.isBalanced()); // true
