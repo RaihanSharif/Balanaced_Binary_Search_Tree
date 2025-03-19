@@ -48,7 +48,7 @@ class Tree {
       sortedUniqueArr.length - 1,
       null
     );
-    return this.root; // TODO: need to return something?
+    return this.root;
   }
 
   insert(value) {
@@ -265,7 +265,11 @@ class Tree {
     return this.#getHeight(root) !== -1;
   }
 
-  rebalance() {}
+  rebalance() {
+    let toList = [];
+    this.levelOrder((data) => toList.push(data));
+    this.root = this.buildTree(toList);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -365,9 +369,15 @@ prettyPrint(tr1.root);
 // console.log(`depth of node 13: `, tr1.depth(13));
 // console.log(`depth of node 5: `, tr1.depth(5));
 
-console.log(`is balanced: `, tr1.isBalanced()); // true
+// testing isBalanced
+// console.log(`is balanced: `, tr1.isBalanced()); // true
+// prettyPrint(tr1.root);
+// console.log(`is balanced: `, tr1.isBalanced()); // true
+
 tr1.insert(22);
 tr1.insert(33);
 tr1.insert(44);
 prettyPrint(tr1.root);
-console.log(`is balanced: `, tr1.isBalanced()); // true
+tr1.rebalance();
+prettyPrint(tr1.root);
+console.log(tr1.isBalanced());
